@@ -1,0 +1,1813 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</p>
+<p class="p1">&lt;title&gt;Taskboard — Concept Exploration&lt;/title&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>:root{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--navy:#0b1526;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--navy-2:#101d33;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--brand:#5b7f32;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--brand-dark:#3d5a1f;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--brand-light:#eaf1dd;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--bg:#f4f5f2;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--surface:#ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--border:#e3e5df;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--text:#1c211a;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--text-2:#5c6156;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--text-3:#8b8f84;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--due-soon:#c98500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--due-soon-bg:#fdf3df;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--at-risk:#c1541f;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--at-risk-bg:#fbe7db;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--critical:#c0392b;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--critical-bg:#fbe2de;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--shadow: 0 1px 2px rgba(11,21,38,.06), 0 6px 20px rgba(11,21,38,.05);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>*{box-sizing:border-box;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html,body{margin:0;padding:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>body{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:var(--bg);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height:100vh;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow:hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- Sidebar ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:76px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:linear-gradient(180deg,var(--navy) 0%, var(--navy-2) 100%);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:#aeb8c8;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex-direction:column;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items:center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:16px 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar .logo{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:34px;height:34px;border-radius:50%;border:1.5px solid #3a4a63;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex;align-items:center;justify-content:center;margin-bottom:22px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size:12px;font-weight:700;color:#dfe6ef;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.navitem{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:100%;display:flex;flex-direction:column;align-items:center;gap:4px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:9px 0;font-size:9.5px;color:#8391a6;cursor:pointer;position:relative;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-left:2px solid transparent;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.navitem svg{width:18px;height:18px;stroke:#8391a6;fill:none;stroke-width:1.7;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.navitem.active{color:#e9edf3;border-left-color:var(--brand);background:rgba(91,127,50,.18);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.navitem.active svg{stroke:#cfe0a8;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.navitem .badge{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position:absolute; top:4px; right:14px; background:var(--brand);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:6px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- Main ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.main{flex:1; display:flex; flex-direction:column; min-width:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.env-banner{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:#eef1ea; color:#6b7062; font-size:11.5px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:5px 22px; border-bottom:1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:14px; flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.env-banner .env-text{flex:1; text-align:center;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topbar{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:14px; padding:14px 22px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom:1px solid var(--border); background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topbar h1{font-size:18px; margin:0; font-weight:700; letter-spacing:-.2px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.back{color:var(--text-2); font-size:18px; cursor:pointer;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.spacer{flex:1;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family:inherit; font-size:12.5px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-box{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:7px; background:#eceee9; border-radius:9px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:0 10px; height:34px; width:280px; flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-box svg{width:15px;height:15px; stroke:var(--text-3); fill:none; stroke-width:2; flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-box input{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border:none; background:transparent; outline:none; font-family:inherit; font-size:12.5px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:var(--text); flex:1; min-width:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-box input::placeholder{color:var(--text-3);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-clear{cursor:pointer; color:var(--text-3); font-size:11px; padding:2px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-clear:hover{color:var(--text);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.icon-btn{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:34px;height:34px;border-radius:8px;border:1px solid var(--border); background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text-2);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.icon-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.avatar{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:30px;height:30px;border-radius:50%; background:var(--brand-dark); color:#fff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex;align-items:center;justify-content:center; font-size:12px; font-weight:700;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- Filter &amp; group-by row ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filter-row{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:10px; padding:10px 22px; background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom:1px solid var(--border); flex-wrap:wrap; position:relative; z-index:10;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Group-by is a segmented control, matching the platform's "Plan by"</p>
+<p class="p1"><span class="Apple-converted-space">     </span>pattern: every option is visible at once, so switching how the board is</p>
+<p class="p1"><span class="Apple-converted-space">     </span>organised takes one click instead of open-menu-then-pick. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.seg-label{font-size:13.5px; font-weight:700; color:var(--text); flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.segmented{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; border:1px solid var(--border); border-radius:9px; overflow:hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:var(--surface); flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.seg{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:8px 15px; font-family:inherit; font-size:13px; font-weight:600; color:var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:var(--surface); border:none; border-right:1px solid var(--border); cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>white-space:nowrap; transition:.12s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.seg:last-child{border-right:none;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.seg:hover:not(.active){background:#f4f5f1;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.seg.active{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:var(--brand-light); color:var(--brand-dark); font-weight:700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:inset 0 0 0 1.5px #bccfa0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filter-divider{width:1px; height:22px; background:var(--border); flex-shrink:0;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Platform-wide Filters button — one entry point instead of a row of</p>
+<p class="p1"><span class="Apple-converted-space">     </span>always-visible selects, matching the filter system being built for the</p>
+<p class="p1"><span class="Apple-converted-space">     </span>rest of the product. The badge is the only thing that hints at what's</p>
+<p class="p1"><span class="Apple-converted-space">     </span>active until the pinned row below spells it out. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-control{position:relative;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-btn{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:8px; padding:7px 14px; border-radius:8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border:1px solid var(--border); background:var(--surface); color:var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family:inherit; font-size:13px; font-weight:700; cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-btn svg{width:14px;height:14px; stroke:var(--text-2); fill:none; stroke-width:1.8;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-btn.active{border-color:var(--brand-dark);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-badge{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:var(--brand-dark); color:#fff; font-size:11px; font-weight:700; border-radius:50%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:19px; height:19px; display:flex; align-items:center; justify-content:center; flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-panel{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:none; position:absolute; top:calc(100% + 6px); left:0; width:260px; background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border:1px solid var(--border); border-radius:10px; box-shadow:0 10px 30px rgba(11,21,38,.14);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:14px; z-index:50;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-panel.open{display:block;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-panel-row{margin-bottom:12px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-panel-row:last-child{margin-bottom:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-panel-row label{display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--text-3); margin-bottom:6px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filter-select{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:100%; padding:7px 9px; border-radius:8px; border:1px solid var(--border); background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:var(--text-2); font-family:inherit; font-size:12.5px; font-weight:600; cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filter-select.active{border-color:var(--brand-dark); color:var(--brand-dark); background:var(--brand-light);}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toggle-switch{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:8px; cursor:pointer; flex-shrink:0; user-select:none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toggle-switch input{display:none;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toggle-track{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:32px; height:19px; border-radius:10px; background:#d7dacd; position:relative; transition:.15s; flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toggle-thumb{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position:absolute; top:2px; left:2px; width:15px; height:15px; border-radius:50%; background:#fff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow:0 1px 2px rgba(0,0,0,.2); transition:.15s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toggle-switch input:checked + .toggle-track{background:var(--brand-dark);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toggle-switch input:checked + .toggle-track .toggle-thumb{transform:translateX(13px);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toggle-label{font-size:12.5px; font-weight:600; color:var(--text-2);}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Pinned filter chips — only appears once a filter is active; each chip is</p>
+<p class="p1"><span class="Apple-converted-space">     </span>individually removable, "Clear Filter" drops all of them at once, and</p>
+<p class="p1"><span class="Apple-converted-space">     </span>"Save View" persists the current group-by + filter combination. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pinned-row{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:14px; padding:9px 22px; background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom:1px solid var(--border); flex-wrap:wrap;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pin-chips{display:flex; align-items:center; gap:8px; flex-wrap:wrap; flex:1;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pin-chip{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:6px; background:#eef0ea; color:var(--text); font-size:12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight:600; padding:5px 8px 5px 9px; border-radius:20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pin-chip svg{width:11px;height:11px; stroke:var(--text-3); fill:none; stroke-width:1.8; flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pin-chip .chip-x{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor:pointer; color:var(--text-3); font-weight:700; margin-left:2px; padding:0 2px; line-height:1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pin-chip .chip-x:hover{color:var(--critical);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pinned-actions{display:flex; align-items:center; gap:10px; flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pin-link{color:var(--brand-dark); font-size:12.5px; font-weight:700; cursor:pointer; text-decoration:none;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pin-link:hover{text-decoration:underline;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.pin-sep{color:var(--border);}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- Board ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Board and detail panel sit side by side in one row — the panel is not an</p>
+<p class="p1"><span class="Apple-converted-space">     </span>overlay. Closed, it takes zero width and the board is full-bleed; opening</p>
+<p class="p1"><span class="Apple-converted-space">     </span>a card animates its width open, so the board visibly cedes room to it</p>
+<p class="p1"><span class="Apple-converted-space">     </span>instead of the panel appearing on top of everything. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Prototype-only control for comparing the three task-type treatments.</p>
+<p class="p1"><span class="Apple-converted-space">     </span>Styled unlike the product chrome so it never reads as UI under test. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.opt-switch{display:flex; align-items:center; gap:5px; flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.opt-label{font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:#8a8f81;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.opt-btn{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border:1px solid #d3d7ca; background:#fff; color:#5c6156; border-radius:6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:3px 9px; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.opt-btn:hover{background:#f6f7f3;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.opt-btn.active{background:var(--navy); border-color:var(--navy); color:#fff;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- Task type as a dropdown (B and C) ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.type-dd-wrap{display:flex; align-items:center; gap:10px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.seg-wrap{position:relative; display:flex; align-items:center;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#groupTypePanel{left:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-chev{width:11px; height:11px; stroke:var(--text-2); fill:none; stroke-width:2.2; margin-left:2px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.seg .seg-chev{width:10px; height:10px; stroke:currentColor; fill:none; stroke-width:2.6; margin-left:6px; vertical-align:-1px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.filters-panel.wide{width:296px; padding:6px; max-height:420px; overflow-y:auto;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-row{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; gap:9px; padding:8px 9px; border-radius:7px; cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size:12.5px; color:var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-row:hover{background:#f4f5f1;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-row.active{background:var(--brand-light); color:var(--brand-dark); font-weight:700;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-row .vname{flex:1;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-row .vcount{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size:11px; font-weight:700; color:var(--text-2); background:#eef0ea; padding:1px 7px; border-radius:20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-row.active .vcount{background:#fff; color:var(--brand-dark);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-row.zero{color:var(--text-3);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dd-row.all{border-bottom:1px solid var(--border); border-radius:7px 7px 0 0; margin-bottom:4px; padding-bottom:10px;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- Task-type tab bar ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tabbar{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom:1px solid var(--border); flex-shrink:0; padding:0 6px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tabbar-arrow{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:38px; height:52px; border:none; background:transparent; cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family:inherit; font-size:22px; line-height:1; color:var(--brand); flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tabbar-arrow:hover:not(:disabled){color:var(--brand-dark);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tabbar-arrow:disabled{color:#cdd1c6; cursor:default;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tabbar-track{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex:1; min-width:0; display:flex; align-items:center; overflow-x:auto;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>scroll-behavior:smooth; scrollbar-width:none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tabbar-track::-webkit-scrollbar{display:none;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-tab{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position:relative; display:inline-flex; align-items:center; gap:8px; flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:9px 18px; margin:6px 0; border:none; background:transparent; border-radius:20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family:inherit; font-size:12.5px; font-weight:600; letter-spacing:.55px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-transform:uppercase; color:var(--text-2); cursor:pointer; white-space:nowrap;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-tab:hover:not(.active){color:var(--text);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Hairline separators between tabs, suppressed either side of the active pill</p>
+<p class="p1"><span class="Apple-converted-space">     </span>so the pill reads as one shape. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-tab + .tt-tab::before{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height:22px; width:1px; background:var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-tab.active::before, .tt-tab.active + .tt-tab::before{display:none;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-tab.active{background:var(--brand-light); color:var(--brand-dark); font-weight:700;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-count{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size:11px; font-weight:700; letter-spacing:0; color:var(--text-2);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:#eef0ea; padding:1px 7px; border-radius:20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-tab.active .tt-count{background:#fff; color:var(--brand-dark);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* A queue at zero stays reachable but recedes, the way the Dashboard fades</p>
+<p class="p1"><span class="Apple-converted-space">     </span>its zero tiles — "nothing here" is information worth keeping on screen. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-tab.zero{color:var(--text-3);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tt-tab.zero .tt-count{opacity:.55;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.workspace{flex:1; display:flex; overflow:hidden; min-height:0;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* The board is its own fixed region — it never overlaps the detail panel.</p>
+<p class="p1"><span class="Apple-converted-space">     </span>Opening the panel narrows this region (flex:1 vs. the panel's fixed</p>
+<p class="p1"><span class="Apple-converted-space">     </span>width), and columns that no longer fit scroll laterally instead of</p>
+<p class="p1"><span class="Apple-converted-space">     </span>being compressed or hidden behind anything. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.board-wrap{flex:1; min-width:0; overflow-x:auto; overflow-y:hidden; padding:16px 22px 90px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.board{display:flex; gap:16px; align-items:flex-start;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* A single task-type column gets more width, since it is not competing with</p>
+<p class="p1"><span class="Apple-converted-space">     </span>neighbours and the space would otherwise sit empty. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.col.solo{width:410px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.col{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:290px; flex-shrink:0; background:#fbfbf9; border-radius:12px; border:1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; flex-direction:column; max-height:100%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.col-head{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:12px 14px 10px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.col-head .dot{width:8px;height:8px;border-radius:50%;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.col-head h3{font-size:13px; margin:0; font-weight:700; flex:1;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.col-head .count{font-size:11.5px; color:var(--text-3); font-weight:700; background:#eef0ea; padding:2px 7px; border-radius:20px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.col-body{padding:10px; display:flex; flex-direction:column; gap:8px; overflow-y:auto; transition:.1s;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.col-body.drag-over{background:var(--brand-light); outline:2px dashed var(--brand); outline-offset:-4px;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:11px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor:grab; transition:.12s; position:relative;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card:hover{box-shadow:var(--shadow); border-color:#cfd3c8;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card.dragging{opacity:.4;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card.ontrack{opacity:.55;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Card anatomy, line by line:</p>
+<p class="p1"><span class="Apple-converted-space">     </span>1. title (+ OVERDUE flag pinned to the top-right of the same line)</p>
+<p class="p1"><span class="Apple-converted-space">     </span>2. trip reference</p>
+<p class="p1"><span class="Apple-converted-space">     </span>3. task description</p>
+<p class="p1"><span class="Apple-converted-space">     </span>4. priority badge</p>
+<p class="p1"><span class="Apple-converted-space">     </span>5. assignee avatar (left) + deadline with calendar icon (right) */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-titlerow{display:flex; align-items:flex-start; justify-content:space-between; gap:8px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-title{font-size:13.5px; font-weight:700; margin:0 0 2px; flex:1; min-width:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.overdue-flag{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:var(--critical); letter-spacing:.4px; flex-shrink:0; margin-top:2px; white-space:nowrap;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.overdue-flag .odot{width:6px; height:6px; border-radius:50%; background:var(--critical); flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-ref{font-size:10.5px; color:var(--text-3); font-weight:700; letter-spacing:.2px; margin-bottom:3px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Due-diligence cards put the company here instead of a TRIP number. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-subject{display:inline-flex; align-items:center; gap:5px; letter-spacing:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-subject svg{width:11px; height:11px; stroke:var(--text-3); fill:none; stroke-width:1.9; flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-sub{font-size:11.5px; color:var(--text-2); margin-bottom:7px; line-height:1.35;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-meta{display:flex; align-items:center; gap:5px; flex-wrap:wrap; margin-bottom:9px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.meta-tag{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size:10px; font-weight:600; color:var(--text-3); background:#eef0ea; padding:2px 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius:5px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.meta-tag.priority{color:#fff;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-bottom{display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-deadline{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; color:var(--text-2);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-deadline svg{width:12px; height:12px; stroke:var(--text-3); fill:none; stroke-width:1.8; flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-deadline.overdue{color:var(--critical);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-deadline.overdue svg{stroke:var(--critical);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.assignee{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:20px;height:20px;border-radius:50%; background:#e2e5dc; color:var(--text-2); font-size:9px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight:700; display:flex;align-items:center;justify-content:center; flex-shrink:0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.assignee.me{background:var(--brand-dark); color:#fff;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Unassigned: an empty silhouette, not a "+". The card offers no way to</p>
+<p class="p1"><span class="Apple-converted-space">     </span>assign — that lives in the detail panel — so it must not look clickable. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.assignee.empty{background:#f2f3ef; border:1px dashed #c9ccc2;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.assignee.empty svg{width:12px; height:12px; stroke:#a6aa9c; fill:none; stroke-width:2;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* No "Waiting on" tag on the card — the column already says the task is</p>
+<p class="p1"><span class="Apple-converted-space">     </span>waiting, and who it waits on lives in the panel's "Waiting on" row. */</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* ---------- Detail panel ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Two permanently fixed panes, side by side — the board (left) and the</p>
+<p class="p1"><span class="Apple-converted-space">     </span>detail panel (right) never resize each other or overlap. The board</p>
+<p class="p1"><span class="Apple-converted-space">     </span>scrolls laterally for its columns; the panel always occupies the same</p>
+<p class="p1"><span class="Apple-converted-space">     </span>420px and shows an empty state until a task is selected. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:420px; flex-shrink:0; border-left:1px solid var(--border); background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; flex-direction:column; overflow:hidden;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align:center; padding:40px 30px; color:var(--text-3);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty-icon{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:74px; height:56px; border:1.5px dashed #d7dacd; border-radius:10px; margin-bottom:18px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:10px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty-icon .line{height:3px; border-radius:2px; background:#e3e5df;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty-icon .line1{width:44px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty-icon .line2{width:30px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty-icon .dots{display:flex; gap:4px; margin-top:2px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty-icon .dots span{width:8px; height:8px; border-radius:50%; background:#e3e5df;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty h4{font-size:14px; font-weight:700; color:var(--text); margin:0 0 4px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-empty p{font-size:12.5px; color:var(--text-3); margin:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-content{flex:1; display:flex; flex-direction:column; min-height:0; display:none;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-content.show{display:flex;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-head{padding:18px 20px 14px; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:10px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-head .close{cursor:pointer; color:var(--text-3); font-size:18px; margin-left:auto;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-desc{font-size:12.5px; color:var(--text-2); margin-top:5px; line-height:1.45;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Task Details / Notes tabs */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tab-row{display:flex; gap:20px; padding:0 20px; border-bottom:1px solid var(--border); flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tab{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:11px 0; font-size:13px; font-weight:700; color:var(--text-3); cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom:2px solid transparent; margin-bottom:-1px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tab.active{color:var(--brand-dark); border-bottom-color:var(--brand-dark);}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-body{flex:1; overflow-y:auto; padding:6px 20px 18px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tab-panel{display:none;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tab-panel.active{display:block;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mini-label{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--text-3);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin:18px 0 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mini-label:first-child{margin-top:14px;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.detail-row{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; padding:11px 0; border-bottom:1px solid #f0f1ed;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-label{font-size:12px; color:var(--text-2); flex-shrink:0; padding-top:1px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-value{font-size:12.5px; font-weight:600; color:var(--text); text-align:right;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Editable field rows (owner, priority, status): value and its edit link sit</p>
+<p class="p1"><span class="Apple-converted-space">     </span>on one baseline, right-aligned with every other value in the panel. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-value.owner{display:flex; align-items:center; justify-content:flex-end; gap:8px; min-height:24px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.status-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-value.ref{color:var(--brand-dark); font-weight:700;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-stack{display:flex; flex-direction:column; align-items:flex-end; gap:6px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-line{display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--text);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-line svg{width:13px; height:13px; stroke:var(--text-3); fill:none; stroke-width:1.8; flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-line.contact{color:var(--brand-dark); font-weight:600;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.d-time-arrow{color:var(--text-3); font-size:12px; text-align:right;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.late-flag{color:var(--critical); font-weight:700;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.value-pill{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11.5px; font-weight:700;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Completed/activity trail — mirrors the real product's audit trail */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hist-item{display:flex; gap:10px; padding:9px 0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hist-check{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:19px; height:19px; border-radius:50%; border:1.5px solid var(--brand); color:var(--brand);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; margin-top:1px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hist-title{font-size:13.5px; font-weight:600; color:var(--text);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hist-meta{font-size:11.5px; color:var(--text-3); margin-top:2px;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Notes tab */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.notes-empty{font-size:12.5px; color:var(--text-3); padding:6px 0 14px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.note-item{padding:9px 0; border-bottom:1px solid #f0f1ed;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.note-item .note-text{font-size:12.5px; color:var(--text);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.note-item .note-meta{font-size:11px; color:var(--text-3); margin-top:3px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.note-textarea{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:100%; border:1px solid var(--border); border-radius:8px; padding:9px 10px; font-family:inherit;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size:12.5px; resize:vertical; min-height:70px; margin-top:14px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.confirm-btn{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width:100%; background:var(--brand-dark); color:#fff; border:none; border-radius:8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:11px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.confirm-btn:hover{filter:brightness(1.1);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.confirm-btn.secondary{background:var(--surface); color:var(--brand-dark); border:1px solid var(--brand-dark); margin-top:8px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.panel-footer{padding:14px 20px; border-top:1px solid var(--border); flex-shrink:0;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Two primary actions side by side: performing the task (hand off to the</p>
+<p class="p1"><span class="Apple-converted-space">     </span>trip) and closing it out. Both are prominent; the filled one is the</p>
+<p class="p1"><span class="Apple-converted-space">     </span>dominant path, the outlined one is equally reachable. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer-btns{display:flex; gap:8px;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer-btns .confirm-btn{margin-top:0;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Owner assign / reassign — the one field in this panel that is editable</p>
+<p class="p1"><span class="Apple-converted-space">     </span>here rather than on the trip, because unassigned work sitting in a shared</p>
+<p class="p1"><span class="Apple-converted-space">     </span>column was the single most-cited failure in the interviews. */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.owner-link{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color:var(--brand-dark); font-size:11.5px; font-weight:700; cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-decoration:underline; margin-left:2px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.owner-link:hover{color:var(--brand);}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.owner-select{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding:5px 8px; border-radius:7px; border:1px solid var(--brand-dark); background:var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family:inherit; font-size:12px; font-weight:600; color:var(--text); cursor:pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* toast */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toast{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position:fixed; top:20px; right:20px; background:var(--brand-dark); color:#fff; padding:11px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius:9px; font-size:12.5px; font-weight:600; box-shadow:var(--shadow); z-index:60;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transform:translateY(-14px); opacity:0; transition:.18s; pointer-events:none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.toast.show{transform:translateY(0); opacity:1; pointer-events:auto;}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="sidebar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="logo"&gt;CC&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M4 7h16M4 12h16M4 17h10"/&gt;&lt;/svg&gt;Booking&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M3 11l9-7 9 7M5 10v10h14V10"/&gt;&lt;/svg&gt;Home&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;circle cx="12" cy="12" r="8"/&gt;&lt;path d="M12 8v4l3 2"/&gt;&lt;/svg&gt;Dashboard&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M4 4h16v16H4z"/&gt;&lt;path d="M4 9h16"/&gt;&lt;/svg&gt;Inbox&lt;span class="badge"&gt;3&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem active"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;rect x="3" y="4" width="7" height="16" rx="1.5"/&gt;&lt;rect x="14" y="4" width="7" height="9" rx="1.5"/&gt;&lt;/svg&gt;Taskboard&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;circle cx="12" cy="8" r="3.2"/&gt;&lt;path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6"/&gt;&lt;/svg&gt;Shipper&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;rect x="2" y="9" width="14" height="8" rx="1"/&gt;&lt;path d="M16 12h3l3 3v2h-6z"/&gt;&lt;circle cx="6.5" cy="19" r="1.6"/&gt;&lt;circle cx="17.5" cy="19" r="1.6"/&gt;&lt;/svg&gt;Carrier&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;circle cx="6" cy="6" r="2.2"/&gt;&lt;circle cx="18" cy="6" r="2.2"/&gt;&lt;circle cx="12" cy="18" r="2.2"/&gt;&lt;path d="M6 8v4h12V8M12 12v4"/&gt;&lt;/svg&gt;Enterprise&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="navitem"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;rect x="3" y="5" width="18" height="14" rx="2"/&gt;&lt;path d="M3 10h18"/&gt;&lt;/svg&gt;Finance&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="main"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="env-banner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="env-text"&gt;Concept exploration — not final visual design. Data is illustrative.&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="opt-switch"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="opt-label"&gt;Task type UI&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="opt-btn active" data-opt="tabs"&gt;A · Tabs&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="opt-btn" data-opt="dropdown"&gt;B · Dropdown&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="opt-btn" data-opt="groupdd"&gt;C · From Group by&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="topbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="back"&gt;←&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;Taskboard&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="spacer"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="icon-btn"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M18 8a6 6 0 10-12 0c0 4-2 6-2 6h16s-2-2-2-6"/&gt;&lt;path d="M10 20a2 2 0 004 0"/&gt;&lt;/svg&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="avatar"&gt;SM&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="filter-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="search-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24"&gt;&lt;circle cx="11" cy="11" r="7"/&gt;&lt;path d="M21 21l-4.3-4.3"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input id="searchInput" type="text" placeholder="Search by Trip reference" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="search-clear" id="searchClear" style="display:none;"&gt;✕&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="filters-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="filters-btn" id="filtersBtn"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M4 5h16l-6.5 7.5V19l-3-1.6v-4.9z"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>Filters</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="filters-badge" id="filtersBadge" style="display:none;"&gt;0&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="filters-panel" id="filtersPanel"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="filter-divider"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="seg-label"&gt;Group by&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- C hangs its panel off the "Task type" segment itself, so the grouping</p>
+<p class="p1"><span class="Apple-converted-space">         </span>button doubles as the selector and no extra control is introduced. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="seg-wrap" id="segWrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="segmented" id="groupSegmented"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="filters-panel wide" id="groupTypePanel"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- B is a standalone dropdown next to the grouping, using the same popover</p>
+<p class="p1"><span class="Apple-converted-space">         </span>pattern as the Filters button. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="type-dd-wrap" id="typeDdWrap" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="filter-divider"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="filters-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="filters-btn" id="typeDdBtn"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span id="typeDdLabel"&gt;Task type: All tasks&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;svg class="dd-chev" viewBox="0 0 24 24"&gt;&lt;path d="M6 9l6 6 6-6"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="filters-panel wide" id="typeDdPanel"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Only the Status grouping has a "Completed" column to reveal or hide, so</p>
+<p class="p1"><span class="Apple-converted-space">         </span>the toggle belongs to that grouping and is absent from the others. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="completed-wrap" id="completedWrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="filter-divider"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;label class="toggle-switch"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="checkbox" id="showPerformedToggle" checked /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="toggle-track"&gt;&lt;span class="toggle-thumb"&gt;&lt;/span&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="toggle-label"&gt;Show completed&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="pinned-row" id="pinnedRow" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="pin-chips" id="pinChips"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="pinned-actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a class="pin-link" id="clearFilterLink"&gt;Clear Filter&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="pin-sep"&gt;|&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a class="pin-link" id="saveViewLink"&gt;Save View&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Task types as the platform's scrollable tab bar. A tab is a scope, not a</p>
+<p class="p1"><span class="Apple-converted-space">       </span>filter and not a grouping — "I am working in Missing Operator" — which is</p>
+<p class="p1"><span class="Apple-converted-space">       </span>what keeps Group by free to organise the columns underneath. Counts sit in</p>
+<p class="p1"><span class="Apple-converted-space">       </span>the tab the way the task panel already badges Notes. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="tabbar" id="typeTabs" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="tabbar-arrow" id="tabsPrev" aria-label="Scroll tabs left"&gt;‹&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tabbar-track" id="tabsTrack"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="tabbar-arrow" id="tabsNext" aria-label="Scroll tabs right"&gt;›&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="workspace"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="board-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="board" id="board"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="panel" id="panel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="panel-empty" id="panelEmpty"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="panel-empty-icon"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="line line1"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="line line2"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="dots"&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h4&gt;No Task Selected&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Click on a card to view the details.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="panel-content" id="panelContent"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="panel-head"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="flex:1;min-width:0;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="font-size:16px;font-weight:700;" id="panelTitle"&gt;Task title&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="panel-desc" id="panelDesc"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="close" id="panelClose"&gt;✕&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tab-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tab active" data-tab="details"&gt;Task Details&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tab" data-tab="history"&gt;History&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tab" data-tab="notes"&gt;Notes&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="panel-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tab-panel active" id="tabDetails"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="panelFields"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tab-panel" id="tabHistory"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mini-label" style="margin-top:0;"&gt;Activity&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="panelTimeline"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="tab-panel" id="tabNotes"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="notesList"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;textarea class="note-textarea" id="noteInput" placeholder="Add a note for whoever picks this up next…"&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="confirm-btn secondary" id="addNoteBtn"&gt;Add note&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="panel-footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="footer-btns"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="confirm-btn" id="performTaskBtn"&gt;Perform task&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="confirm-btn secondary" id="completeTaskBtn"&gt;Mark as completed&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="toast" id="toast"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Data model</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// "Stage" is kept as context on each card (which part of the shipment lifecycle</p>
+<p class="p1">// this task belongs to) — validated by five separate interviews — but it is no</p>
+<p class="p1">// longer the thing the board's columns are organized by. See card-meta below.</p>
+<p class="p1">const STAGES = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{key:'accept', label:'Needs Acceptance'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{key:'setup', label:'Needs Setup'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{key:'transit', label:'In Transit'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{key:'closing', label:'Needs Closing'},</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">// Real interviewees a task can be assigned to — used to build the assignee</p>
+<p class="p1">// group/filter, so personalization is something each user drives themselves,</p>
+<p class="p1">// not a different view the system picks for them.</p>
+<p class="p1">const ASSIGNEE_NAMES = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>NI: 'Nicoleta Ilie',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>IG: 'Ignacio Gonzalez Videla',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>LB: 'Lisa Butler',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>MS: 'Myrthe Schols',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>MG: 'Michael Gruijters',</p>
+<p class="p1">};</p>
+<p class="p1">const ASSIGNEE_ORDER = ['NI','IG','LB','MS','MG'];</p>
+<p class="p1">// 'ME' is the signed-in user (this prototype is viewed as Stephanie Macri),</p>
+<p class="p1">// used by "Assign to me" style flows and the owner picker below.</p>
+<p class="p1">const CURRENT_USER = {code:'ME', initials:'SM', name:'Stephanie Macri'};</p>
+<p class="p1">function ownerName(code){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!code) return 'Unassigned';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(code===CURRENT_USER.code) return CURRENT_USER.name;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return ASSIGNEE_NAMES[code] || code;</p>
+<p class="p1">}</p>
+<p class="p1">function ownerInitials(code){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return code===CURRENT_USER.code ? CURRENT_USER.initials : code;</p>
+<p class="p1">}</p>
+<p class="p1">// Unassigned renders as an empty silhouette, never a "+". Assigning is only</p>
+<p class="p1">// possible from the detail panel, so a "+" on the card would advertise an</p>
+<p class="p1">// action the card doesn't offer — and next to the panel's own "Assign" button</p>
+<p class="p1">// it just says the same thing twice.</p>
+<p class="p1">const EMPTY_AVATAR = '&lt;svg viewBox="0 0 24 24"&gt;&lt;circle cx="12" cy="9" r="3.4"/&gt;&lt;path d="M5.5 20c0-3.3 3-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/&gt;&lt;/svg&gt;';</p>
+<p class="p1">// Org-tree glyph used in the real product beside a company name.</p>
+<p class="p1">const ORG_ICON = '&lt;svg viewBox="0 0 24 24"&gt;&lt;circle cx="6" cy="18" r="2"/&gt;&lt;circle cx="18" cy="18" r="2"/&gt;&lt;circle cx="12" cy="6" r="2"/&gt;&lt;path d="M12 8v3H6v5M12 11h6v5"/&gt;&lt;/svg&gt;';</p>
+<p class="p1">// A task is identified by its trip reference, or by its subject company when</p>
+<p class="p1">// it isn't attached to a trip at all.</p>
+<p class="p1">function taskRef(t){ return t.ref || (t.subject ? t.subject.name : t.id); }</p>
+<p class="p1">function avatarHtml(code){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!code) return `&lt;span class="assignee empty" title="Unassigned"&gt;${EMPTY_AVATAR}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return `&lt;span class="assignee${code===CURRENT_USER.code?' me':''}" title="${ownerName(code)}"&gt;${ownerInitials(code)}&lt;/span&gt;`;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// "waiting" covers the case from the flow: the task can't move because it</p>
+<p class="p1">// depends on someone outside the team (a carrier accepting, a driver</p>
+<p class="p1">// reporting). It gets its own column so those tasks are trackable instead of</p>
+<p class="p1">// sitting invisibly inside "In progress".</p>
+<p class="p1">const STATUS_LABELS = {not_started:'Not started', in_progress:'In progress', waiting:'Waiting on third party', done:'Completed'};</p>
+<p class="p1">const PRIORITY_LABELS = {urgent:'Urgent', high:'High', medium:'Medium', low:'Low'};</p>
+<p class="p1">const PRIORITY_COLORS = {urgent:'#c0392b', high:'#c1541f', medium:'#c98500', low:'#8b8f84'};</p>
+<p class="p1">const PRIORITY_ORDER = ['urgent','high','medium','low']; // tie-breaker only — see renderBoard</p>
+<p class="p1">// One entry per kind of outstanding action a task can represent. These are the</p>
+<p class="p1">// buckets the Dashboard's tiles count, so they are what the Views rail queries.</p>
+<p class="p1">// Named for the action they ask for, not the state they describe. The Dashboard</p>
+<p class="p1">// says "Missing Operator" because it reports on orders; a taskboard is a list of</p>
+<p class="p1">// things to do, so the same queue reads "Assign operator". Verb first, so the</p>
+<p class="p1">// tabs scan as a list of jobs rather than a list of problems.</p>
+<p class="p1">const TASK_TYPES = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>assign_operator:<span class="Apple-converted-space">  </span>'Assign operator',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>offer_carrier:<span class="Apple-converted-space">    </span>'Offer to a carrier',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>accept_trip:<span class="Apple-converted-space">      </span>'Follow up carrier approval',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>assign_vehicle: <span class="Apple-converted-space">  </span>'Assign driver or vehicle',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>assign_trailer: <span class="Apple-converted-space">  </span>'Assign trailer',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>confirm_eta:<span class="Apple-converted-space">      </span>'Confirm timeslot or ETA',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>confirm_arrival:<span class="Apple-converted-space">  </span>'Confirm arrival',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>confirm_cargo:<span class="Apple-converted-space">    </span>'Confirm (un)loading',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>upload_pod: <span class="Apple-converted-space">      </span>'Upload or approve POD',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>charge_line:<span class="Apple-converted-space">      </span>'Confirm charge lines',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>due_diligence:<span class="Apple-converted-space">    </span>'Perform due diligence',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>integration_error:'Resolve integration errors',</p>
+<p class="p1">};</p>
+<p class="p1">const DUE_LABELS = {overdue:'Overdue', today:'Due today', tomorrow:'Due tomorrow', week:'Due this week', none:'No due date'};</p>
+<p class="p2"><br></p>
+<p class="p1">// Due-date bucket, computed from hoursLeft rather than stored twice —</p>
+<p class="p1">// one date field, several ways to slice it.</p>
+<p class="p1">function dueBucket(hoursLeft){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(hoursLeft === null) return 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(hoursLeft &lt;= 0) return 'overdue';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(hoursLeft &lt;= 24) return 'today';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(hoursLeft &lt;= 48) return 'tomorrow';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return 'week';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// NOTE: the panel no longer shows an "Urgency" field. Urgency was a second,</p>
+<p class="p1">// backend-computed reading of the same due date the panel already displays, so</p>
+<p class="p1">// it said the same thing twice. The deadline itself — and the OVERDUE flag</p>
+<p class="p1">// derived from it — carry that signal now.</p>
+<p class="p2"><br></p>
+<p class="p1">// Fixed "now" for this concept's illustrative dates (all sample data is set</p>
+<p class="p1">// around 5–11 Aug 2026) — lets Deadline show a real date/time instead of a</p>
+<p class="p1">// raw "hours left" number, same as the real task screen.</p>
+<p class="p1">const NOW = new Date(2026, 7, 11, 9, 0);</p>
+<p class="p1">const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];</p>
+<p class="p1">function pad2(n){ return String(n).padStart(2,'0'); }</p>
+<p class="p1">function fmtDeadline(d){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return `${d.getDate()} ${MONTHS[d.getMonth()]} ${String(d.getFullYear()).slice(-2)}, ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;</p>
+<p class="p1">}</p>
+<p class="p1">function deadlineOf(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return t.hoursLeft===null ? null : new Date(NOW.getTime() + t.hoursLeft*3600*1000);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Opening a task no longer offers an inline Active/Optional action picker —</p>
+<p class="p1">// "Perform task" always hands off to the trip itself, where the real action</p>
+<p class="p1">// happens. What the panel needs instead is trip-level context to open on:</p>
+<p class="p1">// shipper, pickup location, assigned carrier, and — for stop tasks — the</p>
+<p class="p1">// confirmed time slot vs. the current ETA. Carrier contact details below are</p>
+<p class="p1">// illustrative placeholders (matching the "sample@mail.com" pattern already</p>
+<p class="p1">// used for placeholder data in the real product), not real customer data.</p>
+<p class="p1">const CARRIERS = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>amazing: {name:'Amazing Carrier Global', sub:'Amazing Carrier EU', email:'sample@mail.com', phone:'+31 65590247'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>nova:<span class="Apple-converted-space">    </span>{name:'Nova Freight Global',<span class="Apple-converted-space">    </span>sub:'Nova Freight EU',<span class="Apple-converted-space">    </span>email:'sample@mail.com', phone:'+49 891 220334'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>baltic:<span class="Apple-converted-space">  </span>{name:'Baltic Transport Global',sub:'Baltic Transport EU',email:'sample@mail.com', phone:'+48 225521034'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>manas: <span class="Apple-converted-space">  </span>{name:'Manas Trans',<span class="Apple-converted-space">            </span>sub:'Manas Trans EU',<span class="Apple-converted-space">    </span>email:'sample@mail.com', phone:'+40 213456789'},</p>
+<p class="p1">};</p>
+<p class="p1">const DEFAULT_PICKUP = '2312 BK Leiden, The Netherlands';</p>
+<p class="p2"><br></p>
+<p class="p1">// Not every task belongs to a trip. Due-diligence checks are raised against a</p>
+<p class="p1">// carrier or shipper directly, so they carry a `subject` instead of a trip</p>
+<p class="p1">// reference — and the card shows that company on line 2 where a trip task</p>
+<p class="p1">// shows its TRIP number.</p>
+<p class="p1">function ddTask(o){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return Object.assign({kind:'dd', action:'Perform DueDiligence check'}, o);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">const TASKS = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T1', notes:[{text:'Carrier said they\'d confirm by 09:00 — chase if nothing by then.', who:'Nicoleta Ilie', when:'11 Aug 2026, 07:30'}], type:'offer_carrier', order:'ORD2026-004207', ref:'TRIP2026-018301', stage:'accept', title:'Confirm carrier acceptance', sub:'Budapest → Larisa · MediCo shipment', desc:'Offer the trip to a carrier and confirm acceptance', hoursLeft:-2, action:'Offer to a carrier', assignee:null, status:'not_started', priority:'urgent',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'MediCo', pickup:'1082 Budapest, Hungary', carrier:null},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'8 Aug 2026, 09:02'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T2', type:'offer_carrier', order:'ORD2026-004214', ref:'TRIP2026-018302', stage:'accept', title:'Confirm carrier acceptance', sub:'Rotterdam → Lyon · Ingram Micro', desc:'Offer the trip to a carrier and confirm acceptance', hoursLeft:2, action:'Offer to a carrier', assignee:'IG', status:'waiting', waitingOn:'Baltic Transport (carrier)', priority:'high',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Ingram Micro', pickup:'3011 AA Rotterdam, The Netherlands', carrier:null},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'9 Aug 2026, 11:40'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T3', notes:[{text:'Called twice, no answer. Sent the offer again by email.', who:'Lisa Butler', when:'11 Aug 2026, 08:10'}], type:'accept_trip', order:'ORD2026-004221', ref:'TRIP2026-018299', stage:'accept', title:'Carrier approval pending', sub:'Warsaw → Praha · NewCold', desc:'Awaiting the carrier response to the trip offer', hoursLeft:8, action:'Accept Trip', assignee:null, status:'waiting', waitingOn:'Nova Freight (carrier)', priority:'medium',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'NewCold', pickup:'00-001 Warsaw, Poland', carrier:CARRIERS.nova},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'10 Aug 2026, 08:10', updated:'10 Aug 2026, 08:30'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T4', type:'accept_trip', order:'ORD2026-004228', ref:'TRIP2026-018280', stage:'accept', title:'Carrier accepted', sub:'Antwerp → Paris · Unilever', desc:'Carrier has accepted the trip', hoursLeft:null, action:'Manage Carriers', assignee:'LB', status:'done', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Unilever', pickup:'2000 Antwerp, Belgium', carrier:CARRIERS.amazing},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'7 Aug 2026, 10:00', updated:'7 Aug 2026, 15:05'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T5', type:'accept_trip', order:'ORD2026-004235', ref:'TRIP2026-018270', stage:'accept', title:'Carrier accepted', sub:'Munich → Milan · Ingram Micro', desc:'Carrier has accepted the trip', hoursLeft:null, action:'Manage Carriers', assignee:'LB', status:'done', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Ingram Micro', pickup:'80331 Munich, Germany', carrier:CARRIERS.baltic},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'6 Aug 2026, 09:40', updated:'6 Aug 2026, 17:22'},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T6', type:'assign_vehicle', order:'ORD2026-004242', ref:'TRIP2026-018210', stage:'setup', title:'Missing plate &amp; driver', sub:'Rotterdam → Lyon · assigned to Manas Trans', desc:'Assign a vehicle and select a driver for this trip', hoursLeft:5, action:'Assign Vehicle', activePeers:['Select Driver'], assignee:'IG', status:'in_progress', priority:'medium',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:'3011 AA Rotterdam, The Netherlands', carrier:CARRIERS.manas},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'9 Aug 2026, 08:00', updated:'9 Aug 2026, 09:05'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T7', type:'assign_trailer', order:'ORD2026-004249', ref:'TRIP2026-018195', stage:'setup', title:'Missing trailer assignment', sub:'Eindhoven DC · vehicle and driver confirmed', desc:'Assign a trailer to complete the transport setup', hoursLeft:1, action:'Assign Trailer', assignee:null, status:'not_started', priority:'high',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:'5611 Eindhoven, The Netherlands', carrier:CARRIERS.amazing},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'10 Aug 2026, 07:15', updated:'10 Aug 2026, 12:41'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T8', type:'assign_trailer', order:'ORD2026-004256', ref:'TRIP2026-018180', stage:'setup', title:'Plate &amp; driver confirmed', sub:'Budapest → Larisa · ready for transit', desc:'Vehicle, driver and trailer are confirmed', hoursLeft:null, action:'Resend Transport Data', assignee:'MG', status:'done', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:'1082 Budapest, Hungary', carrier:CARRIERS.nova},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'5 Aug 2026, 09:00', updated:'6 Aug 2026, 08:15'},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T9', notes:[{text:'Driver stuck at the border, delay likely — warned the shipper.', who:'Nicoleta Ilie', when:'11 Aug 2026, 08:45'}], type:'confirm_eta', order:'ORD2026-004263', ref:'TRIP2026-018184', stage:'transit', title:'Stop #2: Confirm Delivery ETA', sub:'Carrier last reported 14:20 · no update since', desc:'Confirm the estimated delivery time for stop #2', hoursLeft:0, action:'Stop #2: Confirm Delivery ETA', assignee:'NI', status:'not_started', priority:'urgent',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.baltic},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>slot:{kind:'Delivery', sched:'10 Aug 2026 · 14:00', upd:'10 Aug 2026 · 15:00', eta:'10 Aug 2026 · 15:10', late:true},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'9 Aug 2026, 06:00', updated:'9 Aug 2026, 12:30'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T10', type:'confirm_arrival', order:'ORD2026-004270', ref:'TRIP2026-018227', stage:'transit', title:'Stop #2: Confirm Arrived at Delivery', sub:'Expected at dock 09:00 today', desc:'Confirm the vehicle has arrived at the delivery stop', hoursLeft:2, action:'Stop #2: Confirm Arrived at Delivery', assignee:'NI', status:'in_progress', priority:'high',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.amazing},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>slot:{kind:'Delivery', sched:'11 Aug 2026 · 09:00', eta:'11 Aug 2026 · 09:00', late:false},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'10 Aug 2026, 05:00', updated:'10 Aug 2026, 06:40'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T11', notes:[{text:'Dock says the truck arrived but nobody signed off yet.', who:'Ops team', when:'11 Aug 2026, 09:05'}], type:'confirm_cargo', order:'ORD2026-004277', ref:'TRIP2026-018150', stage:'transit', title:'Stop #2: Confirm Cargo Unloaded', sub:'Arrived 40 min ago · no status yet', desc:'Confirm the cargo has been unloaded at stop #2', hoursLeft:0.5, action:'Stop #2: Confirm Cargo Unloaded', assignee:null, status:'waiting', waitingOn:'Nova Freight (driver)', priority:'urgent',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.nova},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>slot:{kind:'Delivery', sched:'11 Aug 2026 · 07:30', eta:'11 Aug 2026 · 08:10', late:true},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'11 Aug 2026, 07:00', updated:'11 Aug 2026, 08:50'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T12', type:'confirm_arrival', order:'ORD2026-004284', ref:'TRIP2026-018120', stage:'transit', title:'Stop #1: Confirm Arrived at Pickup', sub:'Tracking confirms on-time progress', desc:'Confirm arrival at the pickup location', hoursLeft:null, action:'View', assignee:'NI', status:'done', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.baltic},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>slot:{kind:'Pickup', sched:'8 Aug 2026 · 14:00', eta:'8 Aug 2026 · 14:00', late:false},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'8 Aug 2026, 09:00', updated:'8 Aug 2026, 14:20'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T13', type:'confirm_cargo', order:'ORD2026-004291', ref:'TRIP2026-018121', stage:'transit', title:'Stop #1: Confirm Cargo Loaded', sub:'Tracking confirms on-time progress', desc:'Confirm the cargo has been loaded at stop #1', hoursLeft:null, action:'View', assignee:'NI', status:'done', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.amazing},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>slot:{kind:'Pickup', sched:'8 Aug 2026 · 14:30', eta:'8 Aug 2026 · 14:45', late:false},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'8 Aug 2026, 09:00', updated:'8 Aug 2026, 14:45'},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T14', type:'upload_pod', order:'ORD2026-004298', ref:'TRIP2026-018050', stage:'closing', title:'Upload Proof of Delivery', sub:'Delivered 2 days ago · Ingram Micro', desc:'Upload the signed proof of delivery document', hoursLeft:9, action:'Stop #2: Upload Proof of Delivery', assignee:null, status:'not_started', priority:'medium',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Ingram Micro', pickup:DEFAULT_PICKUP, carrier:CARRIERS.nova},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>slot:{kind:'Delivery', sched:'9 Aug 2026 · 09:00', eta:'9 Aug 2026 · 09:00', late:false},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'8 Aug 2026, 08:00', updated:'9 Aug 2026, 15:20'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T15', type:'charge_line', order:'ORD2026-004305', ref:'TRIP2026-018041', stage:'closing', title:'Open charge line', sub:'Fuel surcharge unconfirmed', desc:'Confirm the outstanding charge line for this trip', hoursLeft:30, action:'Confirm charge', assignee:'MS', status:'in_progress', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.baltic},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'6 Aug 2026, 09:00', updated:'8 Aug 2026, 10:00'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'T16', type:'upload_pod', order:'ORD2026-004312', ref:'TRIP2026-018030', stage:'closing', title:'POD approved', sub:'Ready for financial close-out', desc:'Proof of delivery approved and ready for close-out', hoursLeft:null, action:'View', assignee:'MS', status:'done', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.amazing},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'5 Aug 2026, 09:00', updated:'7 Aug 2026, 11:05'},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// ---- Due-diligence checks: raised against a company, not a trip ----</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ddTask({id:'D1', type:'due_diligence', subject:{type:'shipper', name:'MauraMt'}, title:'Shipper DueDiligence Check',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'Perform DueDiligence check for the shipper', hoursLeft:422, assignee:null, status:'not_started', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'10 Aug 2026, 06:00'}),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ddTask({id:'D2', type:'due_diligence', subject:{type:'carrier', name:'ABRAMCZYK'}, title:'Carrier DueDiligence Check',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'Perform DueDiligence check for the carrier', hoursLeft:471, assignee:null, status:'not_started', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'10 Aug 2026, 06:00'}),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ddTask({id:'D3', type:'due_diligence', subject:{type:'carrier', name:'PATYK'}, title:'Carrier DueDiligence Check',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'Perform DueDiligence check for the carrier', hoursLeft:471, assignee:'MS', status:'in_progress', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'10 Aug 2026, 06:00', updated:'11 Aug 2026, 08:15'}),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ddTask({id:'D4', type:'due_diligence', subject:{type:'carrier', name:'KDS LOGISTICS'}, title:'Carrier DueDiligence Check',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'Perform DueDiligence check for the carrier', hoursLeft:471, assignee:null, status:'not_started', priority:'medium',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'10 Aug 2026, 06:00'}),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ddTask({id:'D5', notes:[{text:'Requested the missing insurance certificate, waiting on reply.', who:'Lisa Butler', when:'11 Aug 2026, 07:40'}], type:'due_diligence', subject:{type:'carrier', name:'STAŃSKI'}, title:'Carrier DueDiligence Check',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'Perform DueDiligence check for the carrier', hoursLeft:471, assignee:null, status:'waiting', waitingOn:'STAŃSKI (documents)', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>created:'10 Aug 2026, 06:00', updated:'11 Aug 2026, 07:40'}),</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// ---- Operator assignment (the Dashboard's largest queue) ----</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Titles are written as the action to take, not as the missing state: a task</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// called "Missing Operator" tells you what is wrong, "Assign an operator"</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// tells you what to do.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'O1', notes:[{text:'Operator on holiday — needs reassigning before pickup.', who:'Michael Gruijters', when:'11 Aug 2026, 06:50'}], type:'assign_operator', order:'ORD2026-004319', ref:'TRIP2026-018410', title:'Assign an operator', sub:'Tilburg → Lille · Unilever',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'No operator is assigned to this order yet', hoursLeft:-6, action:'Assign Operator', assignee:null, status:'not_started', priority:'urgent',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Unilever', pickup:'5011 Tilburg, The Netherlands', carrier:CARRIERS.amazing}, created:'9 Aug 2026, 08:00'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'O2', type:'assign_operator', order:'ORD2026-004326', ref:'TRIP2026-018415', title:'Assign an operator', sub:'Gdansk → Berlin · NewCold',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'No operator is assigned to this order yet', hoursLeft:4, action:'Assign Operator', assignee:null, status:'not_started', priority:'high',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'NewCold', pickup:'80-001 Gdansk, Poland', carrier:CARRIERS.baltic}, created:'10 Aug 2026, 09:30'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'O3', type:'assign_operator', order:'ORD2026-004333', ref:'TRIP2026-018421', title:'Assign an operator', sub:'Zaragoza → Toulouse · MediCo',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'Operator left the team — this order needs a new one', hoursLeft:20, action:'Assign Operator', assignee:'MG', status:'in_progress', priority:'medium',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'MediCo', pickup:'50001 Zaragoza, Spain', carrier:CARRIERS.nova}, created:'10 Aug 2026, 14:00', updated:'11 Aug 2026, 08:05'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'O4', type:'assign_operator', order:'ORD2026-004340', ref:'TRIP2026-018433', title:'Assign an operator', sub:'Genoa → Lyon · Ingram Micro',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'No operator is assigned to this order yet', hoursLeft:60, action:'Assign Operator', assignee:null, status:'not_started', priority:'low',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Ingram Micro', pickup:'16121 Genoa, Italy', carrier:CARRIERS.manas}, created:'11 Aug 2026, 06:20'},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// ---- Integration errors ----</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'I1', type:'integration_error', order:'ORD2026-004347', ref:'TRIP2026-018402', title:'Fix rejected order payload', sub:'Shipper integration · Ingram Micro',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'The order was rejected by the integration because required fields failed validation', hoursLeft:-1, action:'Resolve integration error',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>assignee:null, status:'not_started', priority:'urgent',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Ingram Micro', pickup:DEFAULT_PICKUP, carrier:null}, created:'11 Aug 2026, 05:40'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'I2', notes:[{text:'Raised with the integration team, ticket INT-4471.', who:'Nicoleta Ilie', when:'11 Aug 2026, 07:55'}], type:'integration_error', order:'ORD2026-004354', ref:'TRIP2026-018388', title:'Re-apply failed timeslot update', sub:'Carrier integration · Baltic Transport',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'A timeslot update sent by the carrier system could not be applied to this trip', hoursLeft:14, action:'Resolve integration error',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>assignee:'NI', status:'in_progress', priority:'high',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.baltic}, created:'10 Aug 2026, 22:10', updated:'11 Aug 2026, 07:55'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:'I3', type:'integration_error', order:'ORD2026-004361', ref:'TRIP2026-018370', title:'Resolve duplicate order', sub:'Shipper integration · NewCold',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc:'The same order was received twice from the shipper integration', hoursLeft:30, action:'Resolve integration error',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>assignee:null, status:'waiting', waitingOn:'NewCold (integration team)', priority:'medium',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>trip:{shipper:'NewCold', pickup:DEFAULT_PICKUP, carrier:null}, created:'9 Aug 2026, 19:00', updated:'11 Aug 2026, 08:30'},</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">// The History tab is the TASK's own trail — created, assigned, status changes,</p>
+<p class="p1">// completion. The trip's action history (Offer to a carrier, Confirm Arrived, …)</p>
+<p class="p1">// belongs to the trip and is read there, not here: mixing the two made the tab</p>
+<p class="p1">// look like it was reporting on the trip rather than on this task.</p>
+<p class="p1">function seedHistory(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const who = ownerName(t.assignee) === 'Unassigned' ? 'Ops team' : ownerName(t.assignee);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const at = t.updated || t.created;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const h = [{a:'Task created', who:'System', when:t.created}];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t.assignee) h.push({a:`Assigned to ${ownerName(t.assignee)}`, who:'System', when:t.created});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t.status==='in_progress') h.push({a:'Task started', who, when:at});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t.status==='waiting') <span class="Apple-converted-space">    </span>h.push({a:`Waiting on ${t.waitingOn || 'third party'}`, who, when:at});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t.status==='done')<span class="Apple-converted-space">        </span>h.push({a:'Task completed', who, when:at});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return h;</p>
+<p class="p1">}</p>
+<p class="p1">TASKS.forEach(t=&gt;{ t.history = seedHistory(t); });</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Group-by definitions — one board, four ways to organize it.</p>
+<p class="p1">// Switching the "Group" control changes column structure; the four</p>
+<p class="p1">// filter selects narrow which tasks appear, independent of grouping.</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p2"><br></p>
+<p class="p1">function assigneeColumns(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cols = [{key:'unassigned', label:'Unassigned', color:'#8b8f84'}];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ASSIGNEE_ORDER.forEach(code=&gt; cols.push({key:code, label:ASSIGNEE_NAMES[code], color:'#8b8f84'}));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(TASKS.some(t=&gt;t.assignee==='ME')) cols.push({key:'ME', label:'Assigned to me', color:'#3d5a1f'});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return cols;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">const GROUP_FIELDS = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>status: {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label:'Status', valueOf:t=&gt;t.status,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>columns:[</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'not_started', label:'Not started', color:'#8b8f84'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'in_progress', label:'In progress', color:'#2a78d6'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'waiting', label:'Waiting on third party', color:'#c98500'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'done', label:'Completed', color:'#3d5a1f'},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Dragging a card to a different column moves it to that status. Leaving</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// "Completed" clears the null hoursLeft a done task carries so it re-enters</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// the due-date math instead of silently staying "on track" forever.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setValue:(t,key)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>t.status = key;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(key==='done'){ t.hoursLeft = null; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>else if(t.hoursLeft===null){ t.hoursLeft = 24; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// A task only "waits" on somebody — dropping out of the waiting column</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// clears that dependency so it can't linger as stale context.</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(key!=='waiting') delete t.waitingOn;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>else if(!t.waitingOn) t.waitingOn = (t.trip &amp;&amp; t.trip.carrier) ? t.trip.carrier.name</p>
+<p class="p1"><span class="Apple-converted-space">                                       </span>: (t.subject ? t.subject.name : 'Third party');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>assignee: {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label:'Assignee', groupable:false, valueOf:t=&gt; t.assignee || 'unassigned',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>get columns(){ return assigneeColumns(); },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setValue:(t,key)=&gt;{ t.assignee = (key==='unassigned') ? null : key; },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>priority: {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label:'Priority', valueOf:t=&gt;t.priority,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>columns:[</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'urgent', label:'Urgent', color:PRIORITY_COLORS.urgent},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'high', label:'High', color:PRIORITY_COLORS.high},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'medium', label:'Medium', color:PRIORITY_COLORS.medium},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'low', label:'Low', color:PRIORITY_COLORS.low},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setValue:(t,key)=&gt;{ t.priority = key; },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>due: {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label:'Due date', valueOf:t=&gt; dueBucket(t.hoursLeft),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>columns:[</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'overdue', label:'Overdue', color:'#c0392b'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'today', label:'Due today', color:'#c98500'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'tomorrow', label:'Due tomorrow', color:'#2a78d6'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'week', label:'Due this week', color:'#2a78d6'},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{key:'none', label:'No due date', color:'#8b8f84'},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Dragging into a due-date bucket sets a representative hoursLeft for that</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// bucket rather than a real calendar date — good enough for this concept.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setValue:(t,key)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const rep = {overdue:-2, today:10, tomorrow:36, week:96, none:null};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>t.hoursLeft = rep[key];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Grouping by task type does not open twelve columns side by side — the tab</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// bar walks the same groups one at a time, so the board shows the group you</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// are standing in. Same grouping concept, paged instead of spread.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>type: {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label:'Task type', valueOf:t=&gt;t.type,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>columns: Object.entries(TASK_TYPES).map(([key,label])=&gt;({key, label, color:'#8b8f84'})),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// State</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">let groupBy = 'status';</p>
+<p class="p1">const FILTER_KEYS = ['status','assignee','priority','due'];</p>
+<p class="p1">function emptyFilters(){ const f={}; FILTER_KEYS.forEach(k=&gt;f[k]=null); return f; }</p>
+<p class="p1">let filters = emptyFilters();</p>
+<p class="p1">// The active tab is a scope, deliberately NOT part of `filters`: it does not</p>
+<p class="p1">// produce a filter chip, because a tab already shows you where you are. Filters</p>
+<p class="p1">// narrow within the tab; Group by arranges the columns inside it.</p>
+<p class="p1">let activeTab = null; <span class="Apple-converted-space">  </span>// null = "All tasks"</p>
+<p class="p1">let searchQuery = '';</p>
+<p class="p1">let showPerformed = true;</p>
+<p class="p2"><br></p>
+<p class="p1">// Task-type categories are counted the way a Dashboard tile is: outstanding</p>
+<p class="p1">// work only, independent of the board's current filters, so a count is a</p>
+<p class="p1">// standalone statement rather than a reflection of what is already on screen.</p>
+<p class="p1">function countForType(typeKey){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return TASKS.filter(t=&gt; t.status !== 'done' &amp;&amp; (!typeKey || t.type === typeKey)).length;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">document.getElementById('showPerformedToggle').addEventListener('change', (e)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>showPerformed = e.target.checked;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderBoard();</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Render: search — free-text over ref, title, context and owner</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">const searchInput = document.getElementById('searchInput');</p>
+<p class="p1">const searchClear = document.getElementById('searchClear');</p>
+<p class="p1">searchInput.addEventListener('input', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>searchQuery = searchInput.value.trim().toLowerCase();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>searchClear.style.display = searchQuery ? 'flex' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderBoard();</p>
+<p class="p1">});</p>
+<p class="p1">searchClear.addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>searchQuery = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>searchInput.value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>searchClear.style.display = 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderBoard();</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Render: task-type tabs</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">function countForTab(typeKey){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return TASKS.filter(t=&gt; t.status !== 'done' &amp;&amp; (!typeKey || t.type === typeKey)).length;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">const tabsTrack = document.getElementById('tabsTrack');</p>
+<p class="p1">const tabsPrev = document.getElementById('tabsPrev');</p>
+<p class="p1">const tabsNext = document.getElementById('tabsNext');</p>
+<p class="p1">tabsPrev.addEventListener('click', ()=&gt; tabsTrack.scrollBy({left:-320, behavior:'smooth'}));</p>
+<p class="p1">tabsNext.addEventListener('click', ()=&gt; tabsTrack.scrollBy({left: 320, behavior:'smooth'}));</p>
+<p class="p1">tabsTrack.addEventListener('scroll', updateTabArrows);</p>
+<p class="p1">addEventListener('resize', updateTabArrows);</p>
+<p class="p2"><br></p>
+<p class="p1">// Arrows grey out at each end so the strip never looks scrollable when it isn't.</p>
+<p class="p1">function updateTabArrows(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const max = tabsTrack.scrollWidth - tabsTrack.clientWidth;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tabsPrev.disabled = tabsTrack.scrollLeft &lt;= 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tabsNext.disabled = tabsTrack.scrollLeft &gt;= max - 1;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Three treatments of the same model, switchable from the banner:</p>
+<p class="p1">// <span class="Apple-converted-space">  </span>A · tabs<span class="Apple-converted-space">      </span>· every queue on screen, one row, scrolls</p>
+<p class="p1">// <span class="Apple-converted-space">  </span>B · dropdown<span class="Apple-converted-space">  </span>· its own control beside Group by</p>
+<p class="p1">// <span class="Apple-converted-space">  </span>C · group-by<span class="Apple-converted-space">  </span>· the panel hangs off the "Task type" segment itself</p>
+<p class="p1">// All three write to the same activeTab, so switching keeps your place.</p>
+<p class="p1">let typeUiOption = 'tabs';</p>
+<p class="p2"><br></p>
+<p class="p1">document.querySelectorAll('.opt-btn').forEach(btn=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>typeUiOption = btn.dataset.opt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.opt-btn').forEach(b=&gt; b.classList.toggle('active', b===btn));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>closeTypePanels();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(groupBy !== 'type') groupBy = 'type'; <span class="Apple-converted-space">  </span>// test harness, not product behaviour</p>
+<p class="p1"><span class="Apple-converted-space">    </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">function typeRows(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return [{key:null, label:'All tasks'}]</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.concat(Object.entries(TASK_TYPES).map(([key,label])=&gt;({key,label})));</p>
+<p class="p1">}</p>
+<p class="p1">function selectTab(key){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>activeTab = key;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>closeTypePanels();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderAll();</p>
+<p class="p1">}</p>
+<p class="p1">function closeTypePanels(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('typeDdPanel').classList.remove('open');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('groupTypePanel').classList.remove('open');</p>
+<p class="p1">}</p>
+<p class="p1">// Rows shared by both dropdown treatments.</p>
+<p class="p1">function fillDdPanel(panel){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>panel.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>typeRows().forEach(r=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const count = countForTab(r.key);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const row = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.className = 'dd-row' + (activeTab===r.key ? ' active':'')</p>
+<p class="p1"><span class="Apple-converted-space">      </span>+ (count===0 ? ' zero':'') + (r.key===null ? ' all':'');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.innerHTML = `&lt;span class="vname"&gt;${r.label}&lt;/span&gt;&lt;span class="vcount"&gt;${count}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.addEventListener('click', ()=&gt; selectTab(r.key));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>panel.appendChild(row);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderTypeUI(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const on = groupBy === 'type';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('completedWrap').style.display = groupBy === 'status' ? 'flex' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('typeTabs').style.display <span class="Apple-converted-space">  </span>= (on &amp;&amp; typeUiOption==='tabs') <span class="Apple-converted-space">    </span>? 'flex' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('typeDdWrap').style.display = (on &amp;&amp; typeUiOption==='dropdown') ? 'flex' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!on){ closeTypePanels(); return; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(typeUiOption==='tabs') <span class="Apple-converted-space">    </span>renderTypeTabs();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(typeUiOption==='dropdown') renderTypeDropdown();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(typeUiOption==='groupdd'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const panel = document.getElementById('groupTypePanel');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>fillDdPanel(panel);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>anchorGroupPanel();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Keep the C panel under the "Task type" segment even before it is first</p>
+<p class="p1">// opened, so it can never appear detached at the left edge.</p>
+<p class="p1">function anchorGroupPanel(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const seg = [...document.querySelectorAll('#groupSegmented .seg')].find(b=&gt;b.textContent.trim().startsWith('Task type'));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(seg) document.getElementById('groupTypePanel').style.left = seg.offsetLeft + 'px';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ---- B · standalone dropdown ---- */</p>
+<p class="p1">const typeDdBtn = document.getElementById('typeDdBtn');</p>
+<p class="p1">const typeDdPanel = document.getElementById('typeDdPanel');</p>
+<p class="p1">typeDdBtn.addEventListener('click', (e)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>e.stopPropagation();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>typeDdPanel.classList.toggle('open');</p>
+<p class="p1">});</p>
+<p class="p1">typeDdPanel.addEventListener('click', (e)=&gt; e.stopPropagation());</p>
+<p class="p1">document.getElementById('groupTypePanel').addEventListener('click', (e)=&gt; e.stopPropagation());</p>
+<p class="p1">document.addEventListener('click', closeTypePanels);</p>
+<p class="p2"><br></p>
+<p class="p1">function renderTypeDropdown(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const label = activeTab ? TASK_TYPES[activeTab] : 'All tasks';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('typeDdLabel').textContent = `Task type: ${label} (${countForTab(activeTab)})`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>typeDdBtn.classList.toggle('active', !!activeTab);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>fillDdPanel(typeDdPanel);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ---- A · tabs ---- */</p>
+<p class="p1">function renderTypeTabs(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tabsTrack.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>[{key:null, label:'All tasks'}]</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.concat(Object.entries(TASK_TYPES).map(([key,label])=&gt;({key,label})))</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.forEach(r=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const count = countForTab(r.key);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const tab = document.createElement('button');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>tab.className = 'tt-tab' + (activeTab===r.key ? ' active':'') + (count===0 ? ' zero':'');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>tab.innerHTML = `${r.label}&lt;span class="tt-count"&gt;${count}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>tab.addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(activeTab === r.key) return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>activeTab = r.key;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Keep the tab you just chose in view when the strip is scrolled.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>tab.scrollIntoView({behavior:'smooth', block:'nearest', inline:'nearest'});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>tabsTrack.appendChild(tab);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateTabArrows();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Render: "Group by" segmented control — one board, switch how it's organised.</p>
+<p class="p1">// All four options stay visible, so the current grouping is readable at a</p>
+<p class="p1">// glance rather than hidden behind a closed menu.</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">function renderSegmented(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const wrap = document.getElementById('groupSegmented');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>wrap.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Object.entries(GROUP_FIELDS).filter(([,def])=&gt; def.groupable !== false).forEach(([key, def])=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const btn = document.createElement('button');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.className = 'seg' + (groupBy===key ? ' active' : '');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.textContent = def.label;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.setAttribute('aria-pressed', groupBy===key ? 'true' : 'false');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Treatment C turns the active "Task type" segment into the selector too:</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// press it once to group, press it again to choose which type.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const isTypeDd = (key==='type' &amp;&amp; typeUiOption==='groupdd');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(isTypeDd){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>btn.innerHTML = `${def.label}&lt;svg class="seg-chev" viewBox="0 0 24 24"&gt;&lt;path d="M6 9l6 6 6-6"/&gt;&lt;/svg&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.addEventListener('click', (e)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(groupBy===key){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(!isTypeDd) return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>e.stopPropagation();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const panel = document.getElementById('groupTypePanel');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const opening = !panel.classList.contains('open');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>closeTypePanels();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(opening){</p>
+<p class="p1"><span class="Apple-converted-space">          </span>anchorGroupPanel();</p>
+<p class="p1"><span class="Apple-converted-space">          </span>panel.classList.add('open');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>groupBy = key;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(isTypeDd){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Land straight in the picker — the grouping is meaningless until a</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// type is chosen, so opening it saves a second click.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>anchorGroupPanel();</p>
+<p class="p1"><span class="Apple-converted-space">          </span>document.getElementById('groupTypePanel').classList.add('open');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}, 0);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>wrap.appendChild(btn);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Render: the platform-wide Filters button — Status / Assignee / Priority /</p>
+<p class="p1">// Due date live inside one popover instead of four always-visible selects.</p>
+<p class="p1">// Independent of the group-by field: each person narrows the same shared</p>
+<p class="p1">// board to what they need instead of getting a different one.</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">const PIN_ICON = '&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M12 2a5 5 0 0 0-5 5c0 2.6 1.6 4.1 2.1 4.5L8 18l4-2.6L16 18l-1.1-6.5c.5-.4 2.1-1.9 2.1-4.5a5 5 0 0 0-5-5z"/&gt;&lt;/svg&gt;';</p>
+<p class="p2"><br></p>
+<p class="p1">const filtersBtn = document.getElementById('filtersBtn');</p>
+<p class="p1">const filtersPanel = document.getElementById('filtersPanel');</p>
+<p class="p1">filtersBtn.addEventListener('click', (e)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>e.stopPropagation();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>filtersPanel.classList.toggle('open');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>filtersBtn.classList.toggle('active');</p>
+<p class="p1">});</p>
+<p class="p1">filtersPanel.addEventListener('click', (e)=&gt; e.stopPropagation());</p>
+<p class="p1">document.addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>filtersPanel.classList.remove('open');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>filtersBtn.classList.toggle('active', activeFilterCount()&gt;0);</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">function renderFiltersPanel(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>filtersPanel.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Object.entries(GROUP_FIELDS).forEach(([key, def])=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const row = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.className = 'filters-panel-row';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const label = document.createElement('label');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label.textContent = def.label;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const sel = document.createElement('select');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.className = 'filter-select' + (filters[key] ? ' active' : '');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const optAll = document.createElement('option');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>optAll.value = ''; optAll.textContent = `All ${def.label.toLowerCase()}`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.appendChild(optAll);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>def.columns.forEach(c=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const opt = document.createElement('option');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>opt.value = c.key; opt.textContent = c.label;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(filters[key]===c.key) opt.selected = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>sel.appendChild(opt);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.addEventListener('change', (e)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>e.stopPropagation();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>filters[key] = sel.value || null;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.appendChild(label);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.appendChild(sel);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>filtersPanel.appendChild(row);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function activeFilterCount(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return Object.values(filters).filter(Boolean).length;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderFiltersBadge(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const n = activeFilterCount();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const badge = document.getElementById('filtersBadge');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>badge.textContent = n;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>badge.style.display = n ? 'flex' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>filtersBtn.classList.toggle('active', n&gt;0);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Pinned chips spell out exactly what's narrowing the board right now — one</p>
+<p class="p1">// chip per active filter, individually removable, plus a link to clear all</p>
+<p class="p1">// of them and a link to save this filter + group-by combination as a view.</p>
+<p class="p1">function renderPinnedRow(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const pinnedRow = document.getElementById('pinnedRow');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const chips = document.getElementById('pinChips');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>chips.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const active = Object.entries(filters).filter(([,v])=&gt;v);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>pinnedRow.style.display = active.length ? 'flex' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>active.forEach(([key, value])=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const def = GROUP_FIELDS[key];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const colDef = def.columns.find(c=&gt;c.key===value);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const chip = document.createElement('span');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>chip.className = 'pin-chip';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>chip.innerHTML = `${PIN_ICON}${def.label}: &lt;b&gt;${colDef ? colDef.label : value}&lt;/b&gt;&lt;span class="chip-x" data-key="${key}"&gt;×&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>chip.querySelector('.chip-x').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>filters[key] = null;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>chips.appendChild(chip);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">document.getElementById('clearFilterLink').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>filters = emptyFilters();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderAll();</p>
+<p class="p1">});</p>
+<p class="p1">// Saved views no longer have a home now that the left panel is a task-type</p>
+<p class="p1">// navigator, so this confirms the intent without pretending to persist. They</p>
+<p class="p1">// need a place of their own — a dropdown beside Filters is the obvious one.</p>
+<p class="p1">document.getElementById('saveViewLink').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const parts = Object.entries(filters).filter(([,v])=&gt;v).map(([key,value])=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const colDef = GROUP_FIELDS[key].columns.find(c=&gt;c.key===value);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return colDef ? colDef.label : value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast('View saved: "' + (parts.length ? parts.join(' · ') : 'All tasks') + '"');</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// Completed tasks are only ever revealed by the Status grouping's own toggle.</p>
+<p class="p1">// Every other grouping shows outstanding work only — and because this is derived</p>
+<p class="p1">// rather than stored, returning to Status restores whatever the user had chosen.</p>
+<p class="p1">function completedVisible(){ return groupBy === 'status' &amp;&amp; showPerformed; }</p>
+<p class="p2"><br></p>
+<p class="p1">// The tab only means anything while the board is grouped by task type, so its</p>
+<p class="p1">// scope is derived rather than stored — group some other way and the tab stops</p>
+<p class="p1">// narrowing anything, come back and your tab is still where you left it.</p>
+<p class="p1">function tabScope(){ return groupBy === 'type' ? activeTab : null; }</p>
+<p class="p2"><br></p>
+<p class="p1">function taskMatchesFilters(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tab = tabScope();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(tab &amp;&amp; t.type !== tab) return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// A tab named "Missing approved POD" cannot hold a POD that is already</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// approved, so a type tab excludes completed work whatever the toggle says.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// That is also what keeps each tab's count equal to what the board shows.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(tab &amp;&amp; t.status==='done') return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!completedVisible() &amp;&amp; t.status==='done') return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(filters.status &amp;&amp; t.status !== filters.status) return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(filters.assignee &amp;&amp; (t.assignee || 'unassigned') !== filters.assignee) return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(filters.priority &amp;&amp; t.priority !== filters.priority) return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(filters.due &amp;&amp; dueBucket(t.hoursLeft) !== filters.due) return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(searchQuery){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const owner = t.assignee ? (ASSIGNEE_NAMES[t.assignee] || t.assignee) : '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const haystack = [taskRef(t), t.order, t.title, t.desc, t.sub, owner, t.action].filter(Boolean).join(' ').toLowerCase();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!haystack.includes(searchQuery)) return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return true;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Render: board — columns come from whichever field is grouped on.</p>
+<p class="p1">// With "Show performed" off, the Performed column disappears entirely</p>
+<p class="p1">// under Status grouping, and performed tasks drop out of every other</p>
+<p class="p1">// grouping too — not just hidden, genuinely out of the way.</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">function renderBoard(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const board = document.getElementById('board');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>board.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const def = GROUP_FIELDS[groupBy];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const filtered = TASKS.filter(taskMatchesFilters);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// One column: the task-type group the tab bar is currently on.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(groupBy === 'type'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const label = activeTab ? TASK_TYPES[activeTab] : 'All tasks';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>board.appendChild(buildColumn({key:'__tab', label, color:'#8b8f84'}, filtered, null, true));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Inside a type tab there is no completed work by definition, so that column</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// would sit permanently at zero — drop it rather than show a dead lane.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const hideDone = groupBy==='status' &amp;&amp; !showPerformed;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const columns = hideDone ? def.columns.filter(c=&gt;c.key!=='done') : def.columns;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>columns.forEach(colDef=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const visible = filtered.filter(t=&gt; def.valueOf(t) === colDef.key);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>board.appendChild(buildColumn(colDef, visible, def, false));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// One column. `def` is the grouped-on field, or null when the column isn't a</p>
+<p class="p1">// bucket of anything droppable (the single task-type column).</p>
+<p class="p1">function buildColumn(colDef, visible, def, solo){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const col = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>col.className = 'col' + (solo ? ' solo' : '');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>col.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="col-head"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="dot" style="background:${colDef.color}"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;${colDef.label}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="count"&gt;${visible.length}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="col-body"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const body = col.querySelector('.col-body');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(visible.length===0){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body.innerHTML = `&lt;div style="font-size:11.5px;color:var(--text-3);padding:10px 4px;"&gt;Nothing matches.&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Cards are ordered by deadline, not by priority: whatever is already</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// overdue or closest to its due date sits at the top, and tasks with no</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// deadline sink to the bottom. Priority only breaks ties between two tasks</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// that share the same deadline — it never outranks the clock.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>visible</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.sort((a,b)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const da = a.hoursLeft===null ? Infinity : a.hoursLeft;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const db = b.hoursLeft===null ? Infinity : b.hoursLeft;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(da !== db) return da - db;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return PRIORITY_ORDER.indexOf(a.priority) - PRIORITY_ORDER.indexOf(b.priority);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>})</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.forEach(t=&gt; body.appendChild(renderCard(t)));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(def &amp;&amp; def.setValue){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body.addEventListener('dragover', (e)=&gt;{ e.preventDefault(); body.classList.add('drag-over'); });</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body.addEventListener('dragleave', ()=&gt; body.classList.remove('drag-over'));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body.addEventListener('drop', (e)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>e.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>body.classList.remove('drag-over');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const task = TASKS.find(x=&gt;x.id===e.dataTransfer.getData('text/plain'));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(!task) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(def.valueOf(task) === colDef.key) return; // dropped back where it started</p>
+<p class="p1"><span class="Apple-converted-space">      </span>def.setValue(task, colDef.key);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderBoard();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>toast(`Moved ${taskRef(task)} to "${colDef.label}"`);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return col;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Card anatomy, top to bottom: title, trip reference, task description,</p>
+<p class="p1">// badges (priority + Overdue when the deadline has passed), assignee avatar.</p>
+<p class="p1">// Bulk-select checkboxes are deferred to a later version. The card carries no</p>
+<p class="p1">// action button either — acting on a task goes through the detail panel, which</p>
+<p class="p1">// hands off to the trip, so the card stays a scannable summary.</p>
+<p class="p1">// The card's third line carries the most recent note rather than the task</p>
+<p class="p1">// description: the description repeats for every task of the same type, while a</p>
+<p class="p1">// note is the one piece of human context worth scanning for. No notes, no line.</p>
+<p class="p1">function latestNote(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (t.notes &amp;&amp; t.notes.length) ? t.notes[t.notes.length-1].text : '';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderCard(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const overdue = t.hoursLeft !== null &amp;&amp; t.hoursLeft &lt;= 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const deadline = deadlineOf(t);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const card = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>card.className = 'card' + (t.hoursLeft===null?' ontrack':'');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>card.draggable = true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>card.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card-titlerow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card-title"&gt;${t.title}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>${overdue ? `&lt;span class="overdue-flag"&gt;&lt;span class="odot"&gt;&lt;/span&gt;OVERDUE&lt;/span&gt;` : ``}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card-ref"&gt;${</p>
+<p class="p1"><span class="Apple-converted-space">      </span>t.subject</p>
+<p class="p1"><span class="Apple-converted-space">        </span>? `&lt;span class="card-subject"&gt;${ORG_ICON}${t.subject.name}&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">        </span>: t.ref</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card-sub"&gt;${latestNote(t)}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card-meta"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="meta-tag priority" style="background:${PRIORITY_COLORS[t.priority]};"&gt;${PRIORITY_LABELS[t.priority]}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card-bottom"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>${avatarHtml(t.assignee)}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="card-deadline${overdue?' overdue':''}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg viewBox="0 0 24 24"&gt;&lt;rect x="3" y="5" width="18" height="16" rx="2"/&gt;&lt;path d="M3 10h18M8 3v4M16 3v4"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>${deadline ? fmtDeadline(deadline) : 'No deadline'}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>card.addEventListener('click', ()=&gt; openPanel(t));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>card.addEventListener('dragstart', (e)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>e.dataTransfer.setData('text/plain', t.id);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>e.dataTransfer.effectAllowed = 'move';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>card.classList.add('dragging');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>card.addEventListener('dragend', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>card.classList.remove('dragging');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return card;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Detail panel — opens on task and trip context (deadline, priority, owner,</p>
+<p class="p1">// reference, shipper, pickup, confirmed slot vs. ETA, assigned carrier) plus</p>
+<p class="p1">// the activity trail. There is no in-panel action picker: "Perform task"</p>
+<p class="p1">// hands off to the trip, where the real action taxonomy (Offer to a carrier,</p>
+<p class="p1">// Confirm Arrived, Upload Proof of Delivery, etc.) actually lives.</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">let panelTask = null;</p>
+<p class="p2"><br></p>
+<p class="p1">function openPanel(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>panelTask = t;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('panelTitle').textContent = t.title;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// The line under the title is the task's own description from the backend —</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// what this task asks you to do — not the trip route.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('panelDesc').textContent = t.desc;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const deadline = deadlineOf(t);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Deadline&lt;/span&gt;&lt;span class="d-value"&gt;${deadline ? fmtDeadline(deadline) : '—'}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Priority&lt;/span&gt;&lt;span class="d-value owner" id="priorityControl"&gt;&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Status&lt;/span&gt;&lt;span class="d-value owner" id="statusControl"&gt;&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t.status==='waiting'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Waiting on&lt;/span&gt;&lt;span class="d-value"&gt;${t.waitingOn || 'Third party'}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Task Owner(s)&lt;/span&gt;&lt;span class="d-value owner" id="ownerControl"&gt;&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// A due-diligence task has no trip: it points straight at the company it was</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// raised against, and the trip-specific rows below don't apply.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t.subject){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const lbl = t.subject.type==='carrier' ? 'Carrier' : 'Shipper';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;${lbl}&lt;/span&gt;&lt;span class="d-stack"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="d-line"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M4 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/&gt;&lt;path d="M15 10h4a1 1 0 0 1 1 1v10"/&gt;&lt;path d="M9 21v-4h2v4"/&gt;&lt;/svg&gt;${t.subject.name}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="d-line"&gt;${ORG_ICON}${t.subject.name}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('panelFields').innerHTML = html;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return finishPanel(t);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Trip&lt;/span&gt;&lt;span class="d-value ref"&gt;${t.ref}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Order&lt;/span&gt;&lt;span class="d-value ref"&gt;${t.order || '—'}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Route&lt;/span&gt;&lt;span class="d-value"&gt;${t.sub}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Shipper&lt;/span&gt;&lt;span class="d-stack"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="d-line"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M4 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/&gt;&lt;path d="M15 10h4a1 1 0 0 1 1 1v10"/&gt;&lt;path d="M9 21v-4h2v4"/&gt;&lt;/svg&gt;${t.trip.shipper}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="d-line"&gt;${ORG_ICON}Shipper Subgroup&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Pickup at&lt;/span&gt;&lt;span class="d-value"&gt;${t.trip.pickup}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t.slot){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Confirmed ${t.slot.kind} Time Slot&lt;/span&gt;&lt;span class="d-value"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>${t.slot.sched}${t.slot.upd ? `&lt;div class="d-time-arrow"&gt;↓&lt;/div&gt;${t.slot.upd}` : ''}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;${t.slot.kind} ETA&lt;/span&gt;&lt;span class="d-value"&gt;${t.slot.eta}${t.slot.late ? ` &lt;span class="late-flag"&gt;(Late)&lt;/span&gt;` : ''}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += `&lt;div class="detail-row"&gt;&lt;span class="d-label"&gt;Assigned Carrier&lt;/span&gt;&lt;span class="d-value"&gt;${</p>
+<p class="p1"><span class="Apple-converted-space">    </span>t.trip.carrier</p>
+<p class="p1"><span class="Apple-converted-space">      </span>? `&lt;span class="d-stack"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="d-line"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M4 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/&gt;&lt;path d="M15 10h4a1 1 0 0 1 1 1v10"/&gt;&lt;path d="M9 21v-4h2v4"/&gt;&lt;/svg&gt;${t.trip.carrier.name}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="d-line"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;circle cx="6" cy="6" r="2"/&gt;&lt;circle cx="18" cy="6" r="2"/&gt;&lt;circle cx="12" cy="18" r="2"/&gt;&lt;path d="M6 8v3h12V8M12 11v7"/&gt;&lt;/svg&gt;${t.trip.carrier.sub}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="d-line contact"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M4 4h16v16H4z"/&gt;&lt;path d="M4 6l8 6 8-6"/&gt;&lt;/svg&gt;${t.trip.carrier.email}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="d-line contact"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M6 3h4l1 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 1v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/&gt;&lt;/svg&gt;${t.trip.carrier.phone}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">      </span>: `&lt;span style="color:var(--text-3);font-weight:600;"&gt;Not yet assigned&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('panelFields').innerHTML = html;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return finishPanel(t);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Shared tail for both task shapes (trip tasks and due-diligence checks).</p>
+<p class="p1">function finishPanel(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ownerEditing = false; priorityEditing = false; statusEditing = false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderOwnerControl();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderPriorityControl();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderStatusControl();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderTimeline();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// A completed task has nothing left to close out, so the second action</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// drops away and the first becomes a read-only route to the trip.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const target = t.subject ? (t.subject.type==='carrier' ? 'carrier' : 'shipper') : 'trip';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('performTaskBtn').textContent = t.status==='done' ? `View ${target}` : 'Perform task';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('completeTaskBtn').style.display = t.status==='done' ? 'none' : 'block';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>t.notes = t.notes || [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderNotes();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>switchTab('details');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('panelEmpty').style.display = 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('panelContent').classList.add('show');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderTimeline(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('panelTimeline').innerHTML = panelTask.history.map(h=&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="hist-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="hist-check"&gt;✓&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;&lt;div class="hist-title"&gt;${h.a}&lt;/div&gt;&lt;div class="hist-meta"&gt;${h.when} by ${h.who}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>`).join('');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Owner is assignable and reassignable straight from the task — "Assign" when</p>
+<p class="p1">// nobody owns it yet, "Reassign" when someone does. Every change is written to</p>
+<p class="p1">// the History tab so the handover is traceable (Myrthe's audit-trail need).</p>
+<p class="p1">let ownerEditing = false;</p>
+<p class="p1">function renderOwnerControl(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t = panelTask;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const wrap = document.getElementById('ownerControl');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!t || !wrap) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(ownerEditing){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let opts = `&lt;option value=""&gt;Unassigned&lt;/option&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>opts += `&lt;option value="${CURRENT_USER.code}"${t.assignee===CURRENT_USER.code?' selected':''}&gt;${CURRENT_USER.name} (me)&lt;/option&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ASSIGNEE_ORDER.forEach(code=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>opts += `&lt;option value="${code}"${t.assignee===code?' selected':''}&gt;${ASSIGNEE_NAMES[code]}&lt;/option&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>wrap.innerHTML = `&lt;select class="owner-select" id="ownerSelect"&gt;${opts}&lt;/select&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const sel = document.getElementById('ownerSelect');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.focus();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.addEventListener('change', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const from = ownerName(t.assignee);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>t.assignee = sel.value || null;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const to = ownerName(t.assignee);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ownerEditing = false;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(from !== to){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>t.history.push({a:`Owner: ${from} → ${to}`, who:CURRENT_USER.name, when:'Just now'});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>toast(t.assignee ? `Assigned to ${to}` : `Owner removed — task is unassigned`);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderOwnerControl();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderTimeline();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderBoard();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>wrap.innerHTML = avatarHtml(t.assignee)</p>
+<p class="p1"><span class="Apple-converted-space">      </span>+ `&lt;span${t.assignee ? '' : ' style="color:var(--text-3);"'}&gt;${ownerName(t.assignee)}&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">      </span>+ `&lt;span class="owner-link" id="ownerEditLink"&gt;${t.assignee ? 'Reassign' : 'Assign'}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('ownerEditLink').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ownerEditing = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderOwnerControl();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Priority is editable: the interviews showed teams disagree about what counts</p>
+<p class="p1">// as high priority, so it is a judgement each team makes rather than a value</p>
+<p class="p1">// the system imposes. Urgency stays read-only — it is computed from the due date.</p>
+<p class="p1">let priorityEditing = false;</p>
+<p class="p1">function renderPriorityControl(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t = panelTask;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const wrap = document.getElementById('priorityControl');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!t || !wrap) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(priorityEditing){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const opts = Object.entries(PRIORITY_LABELS)</p>
+<p class="p1"><span class="Apple-converted-space">      </span>.map(([k,v])=&gt;`&lt;option value="${k}"${t.priority===k?' selected':''}&gt;${v}&lt;/option&gt;`).join('');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>wrap.innerHTML = `&lt;select class="owner-select" id="prioritySelect"&gt;${opts}&lt;/select&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const sel = document.getElementById('prioritySelect');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.focus();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.addEventListener('change', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const from = PRIORITY_LABELS[t.priority];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>t.priority = sel.value;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>priorityEditing = false;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(from !== PRIORITY_LABELS[t.priority]){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>t.history.push({a:`Priority: ${from} → ${PRIORITY_LABELS[t.priority]}`, who:CURRENT_USER.name, when:'Just now'});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>toast(`Priority set to ${PRIORITY_LABELS[t.priority]}`);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderPriorityControl();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderTimeline();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderBoard();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>wrap.innerHTML = `&lt;span class="value-pill" style="background:${PRIORITY_COLORS[t.priority]};color:#fff;"&gt;${PRIORITY_LABELS[t.priority]}&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">      </span>+ `&lt;span class="owner-link" id="priorityEditLink"&gt;Edit&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('priorityEditLink').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>priorityEditing = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderPriorityControl();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Status is editable here so the board's columns aren't reachable by drag alone</p>
+<p class="p1">// — needed on touch devices, and when the task was opened from search or a</p>
+<p class="p1">// notification rather than from the board.</p>
+<p class="p1">let statusEditing = false;</p>
+<p class="p1">function renderStatusControl(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t = panelTask;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const wrap = document.getElementById('statusControl');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!t || !wrap) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const def = GROUP_FIELDS.status;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(statusEditing){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const opts = def.columns.map(c=&gt;`&lt;option value="${c.key}"${t.status===c.key?' selected':''}&gt;${c.label}&lt;/option&gt;`).join('');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>wrap.innerHTML = `&lt;select class="owner-select" id="statusSelect"&gt;${opts}&lt;/select&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const sel = document.getElementById('statusSelect');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.focus();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.addEventListener('change', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const from = STATUS_LABELS[t.status];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>statusEditing = false;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(sel.value !== t.status){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>def.setValue(t, sel.value);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>t.history.push({a:`Status: ${from} → ${STATUS_LABELS[t.status]}`, who:CURRENT_USER.name, when:'Just now'});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>toast(`Moved to "${STATUS_LABELS[t.status]}"`);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>renderBoard();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>openPanel(t); // status can add/remove the "Waiting on" row</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>renderStatusControl();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const col = def.columns.find(c=&gt;c.key===t.status);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>wrap.innerHTML = `&lt;span class="status-dot" style="background:${col?col.color:'#8b8f84'};"&gt;&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">      </span>+ `&lt;span&gt;${STATUS_LABELS[t.status]}&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">      </span>+ `&lt;span class="owner-link" id="statusEditLink"&gt;Change&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('statusEditLink').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>statusEditing = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderStatusControl();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderNotes(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t = panelTask;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const list = document.getElementById('notesList');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!t.notes.length){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>list.innerHTML = `&lt;div class="notes-empty"&gt;No notes yet. Add context for whoever picks this up next.&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>list.innerHTML = t.notes.map(n=&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="note-item"&gt;&lt;div class="note-text"&gt;${n.text}&lt;/div&gt;&lt;div class="note-meta"&gt;${n.when} · ${n.who}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`).join('');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">document.querySelectorAll('.tab').forEach(tabEl=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tabEl.addEventListener('click', ()=&gt; switchTab(tabEl.dataset.tab));</p>
+<p class="p1">});</p>
+<p class="p1">function switchTab(key){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.tab').forEach(el=&gt; el.classList.toggle('active', el.dataset.tab===key));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('tabDetails').classList.toggle('active', key==='details');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('tabHistory').classList.toggle('active', key==='history');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('tabNotes').classList.toggle('active', key==='notes');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">document.getElementById('addNoteBtn').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const input = document.getElementById('noteInput');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const text = input.value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!text || !panelTask) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>panelTask.notes.push({text, who:'Stephanie Macri', when:'Just now'});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>input.value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderNotes();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderBoard(); // the card's third line is the latest note, so it changes too</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// "Perform task" never runs the action here — it hands off to the trip,</p>
+<p class="p1">// which is where the real action taxonomy lives (Offer to a carrier, Confirm</p>
+<p class="p1">// Arrived, Upload Proof of Delivery, etc.). This panel is context, not a</p>
+<p class="p1">// second place to do the work.</p>
+<p class="p1">// "Perform task" opens the trip (or the company, for a due-diligence check) in</p>
+<p class="p1">// a NEW TAB and deliberately leaves the panel open behind it. The user needs the</p>
+<p class="p1">// task's context while they work in the other tab, and comes back to a board</p>
+<p class="p1">// that hasn't lost their place.</p>
+<p class="p1">document.getElementById('performTaskBtn').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t = panelTask;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!t) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const win = window.open('', '_blank');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(win){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>win.document.write(tripPageHtml(t));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>win.document.close();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast(win ? `Opened ${taskRef(t)} in a new tab — task stays open here`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>: `Pop-up blocked — allow pop-ups to open ${taskRef(t)}`);</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// Stand-in for the real trip / company screen, so the hand-off is visible in</p>
+<p class="p1">// the prototype. In production this is simply a link to the existing page.</p>
+<p class="p1">function tripPageHtml(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const isDD = !!t.subject;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const heading = isDD ? t.subject.name : `Trip ${t.ref}`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const kicker = isDD ? (t.subject.type==='carrier' ? 'Carrier profile' : 'Shipper profile') : 'Trip detail';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return `&lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt;&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;title&gt;${heading} — CtrlChain&lt;/title&gt;&lt;style&gt;</p>
+<p class="p1">*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Segoe UI',Inter,system-ui,sans-serif;background:#f4f5f2;color:#1c211a}</p>
+<p class="p1">.top{background:#0b1526;color:#fff;padding:14px 26px;display:flex;align-items:center;gap:12px}</p>
+<p class="p1">.top .logo{width:30px;height:30px;border-radius:50%;border:1.5px solid #3a4a63;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}</p>
+<p class="p1">.banner{background:#eef1ea;color:#6b7062;text-align:center;font-size:12px;padding:7px;border-bottom:1px solid #e3e5df}</p>
+<p class="p1">.wrap{max-width:820px;margin:26px auto;padding:0 22px}</p>
+<p class="p1">.kicker{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#8b8f84}</p>
+<p class="p1">h1{font-size:24px;margin:5px 0 20px}</p>
+<p class="p1">.card{background:#fff;border:1px solid #e3e5df;border-radius:12px;padding:20px 22px;margin-bottom:16px}</p>
+<p class="p1">.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#8b8f84;margin:0 0 14px}</p>
+<p class="p1">.act{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1.5px solid #3d5a1f;background:#eaf1dd;border-radius:10px;padding:14px 16px}</p>
+<p class="p1">.act b{font-size:15px;color:#3d5a1f}</p>
+<p class="p1">.act button{font-family:inherit;background:#3d5a1f;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer}</p>
+<p class="p1">ul{list-style:none;margin:0;padding:0}</p>
+<p class="p1">li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid #f0f1ed;font-size:13.5px}</p>
+<p class="p1">li span{color:#8b8f84;font-size:12px}</p>
+<p class="p1">.note{font-size:12.5px;color:#8b8f84;margin-top:18px;text-align:center}</p>
+<p class="p1">&lt;/style&gt;&lt;/head&gt;&lt;body&gt;</p>
+<p class="p1">&lt;div class="top"&gt;&lt;div class="logo"&gt;CC&lt;/div&gt;&lt;b&gt;CtrlChain&lt;/b&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;div class="banner"&gt;Concept exploration — not final visual design. Data is illustrative.&lt;/div&gt;</p>
+<p class="p1">&lt;div class="wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="kicker"&gt;${kicker}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;${heading}&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card"&gt;&lt;h2&gt;Action required by this task&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="act"&gt;&lt;b&gt;${t.action}&lt;/b&gt;&lt;button onclick="alert('In the real product this performs the action and completes the linked task.')"&gt;Confirm&lt;/button&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;p class="note"&gt;This stand-in page represents the existing trip screen the Taskboard hands off to.&lt;/p&gt;</p>
+<p class="p1">&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;`;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// "Mark as completed" closes the task out from here without a trip round-trip —</p>
+<p class="p1">// for the cases users described where the work already happened somewhere else</p>
+<p class="p1">// (a call, an email) and only the task is still open. The panel stays on the</p>
+<p class="p1">// task so the result of completing it is visible rather than just vanishing.</p>
+<p class="p1">document.getElementById('completeTaskBtn').addEventListener('click', ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t = panelTask;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!t || t.status==='done') return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>t.status = 'done';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>t.hoursLeft = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>t.history.push({a:t.action, who:ownerName(t.assignee || CURRENT_USER.code), when:'Just now'});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderBoard();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>openPanel(t);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast(`${taskRef(t)} marked as completed`);</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">document.getElementById('panelClose').addEventListener('click', closePanel);</p>
+<p class="p1">function closePanel(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>panelTask = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('panelContent').classList.remove('show');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('panelEmpty').style.display = 'flex';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Toast</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">let toastTimer;</p>
+<p class="p1">function toast(msg){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el = document.getElementById('toast');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.textContent = msg;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.classList.add('show');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>clearTimeout(toastTimer);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toastTimer = setTimeout(()=&gt; el.classList.remove('show'), 2600);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">// Init</p>
+<p class="p1">// ---------------------------------------------------------------</p>
+<p class="p1">function renderAll(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderTypeUI();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderSegmented();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderFiltersPanel();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderFiltersBadge();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderPinnedRow();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderBoard();</p>
+<p class="p1">}</p>
+<p class="p1">renderAll();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
